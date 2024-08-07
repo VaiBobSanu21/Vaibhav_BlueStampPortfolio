@@ -76,9 +76,7 @@ def stop(sec):
    gpio.output(23, False) 
    gpio.output(24, False)
    time.sleep(sec)
-def distanceSensor(): #Ultrasonic 1,2,3 Detection
-    
-    #ultrasonic3 = DistanceSensor(echo=19, trigger=13, threshold_distance=0.5)
+def distanceSensor(): #Ultrasonic 1,2 Detection
     return ultrasonic1.distance*100,ultrasonic2.distance*100 
 def segment_colour(frame):   
     hsv_roi =  cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
