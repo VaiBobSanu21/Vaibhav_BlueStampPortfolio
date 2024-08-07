@@ -25,7 +25,7 @@ Previously, I was having issues with the first raspberry pi camera module. Now i
 The ball tracking robot can locate certain objects using a camera and 3 sensors. The three ultrasonic sensors are used to detect objects from all directions. The motors allow the robot to move towards the ball. The H brick is what connects the motors to the breadboard. The breadboard carries out the instructions from the raspberry pi to the motors and sensors. 4 AA batteries are needed to power the motors. The raspberry pi is what gives the motors and sensors instructions. The biggest challenge this time was connecting the raspberry pi camera module. It was accidentally placed backwards and it broke.
 
 # Schematics 
-
+![First schematic](IMG_2187.png)
 
 # Code
 ```c++
