@@ -3,17 +3,13 @@ Have you ever wondered about how Tesla vehicles are able to track every single o
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
-| Vaibhav S | Ponderosa High School | Electrical Engineering | Incoming Junior
-
-**Replace the BlueStamp logo below with an image of yourself and your completed project. Follow the guide [here](https://tomcam.github.io/least-github-pages/adding-images-github-pages-site.html) if you need help.**
-
+| Vaibhav S | Ponderosa High School | Electrical Engineering | Incoming Junior |
 ![Ball Tracking Robot & Vaibhav](IMG_2186.png)
   
 # Final Milestone
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ya3F42WpKdc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Since I finally got the raspberry pi camera working, I worked on improving the image processing to track the ball better. I also ran the motors to go forward and reverse but a few wires were in the wrong spot, causing the robot to spin instead of going forward or reverse. I swapped a few wires in different spots and the motors were finally able to move forward and backward. After debugging the motor wires, I pasted the motor code into the main image processing code. If the ball was farther away from the robot, the robot would move forward towards the ball. If the ball is very close, the robot would stop. 
-
 
 
 # Second Milestone
@@ -27,7 +23,7 @@ Previously, I was having issues with the first raspberry pi camera module. Now i
 The ball tracking robot can locate certain objects using a camera and 3 sensors. The three ultrasonic sensors are used to detect objects from all directions. The motors allow the robot to move towards the ball. The H brick is what connects the motors to the breadboard. The breadboard carries out the instructions from the raspberry pi to the motors and sensors. 4 AA batteries are needed to power the motors. The raspberry pi is what gives the motors and sensors instructions. The biggest challenge this time was connecting the raspberry pi camera module. It was accidentally placed backwards and it broke.
 
 # Schematics 
-Here's where you'll put images of your schematics. [Tinkercad](https://www.tinkercad.com/blog/official-guide-to-tinkercad-circuits) and [Fritzing](https://fritzing.org/learning/) are both great resoruces to create professional schematic diagrams, though BSE recommends Tinkercad becuase it can be done easily and for free in the browser. 
+
 
 # Code
 ```c++
