@@ -28,17 +28,130 @@ The ball tracking robot can locate certain objects using a camera and 3 sensors.
 ![First schematic](IMG_2187.png)
 
 # Code
-```c++
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello World!");
-}
+``` python
+from picamera2 import Picamera2, Preview
+from gpiozero import DistanceSensor
+import time
+import cv2
+import RPi.GPIO as gpio
+import numpy as np
+gpio.setmode(gpio.BCM)
+gpio.setup(17, gpio.OUT)
+gpio.setup(22, gpio.OUT)
+gpio.setup(23, gpio.OUT)
+gpio.setup(24, gpio.OUT)
+ultrasonic1 = DistanceSensor(echo=8, trigger=25, threshold_distance=0.5) #For the Ultrasonic sensors
+ultrasonic2 = DistanceSensor(echo=21, trigger=12, threshold_distance=0.5) 
+def forward(sec):
+   gpio.output(17, True)
+   gpio.output(22, False)
+   gpio.output(23, True) 
+   gpio.output(24, False)
+   time.sleep(sec)
 
-void loop() {
-  // put your main code here, to run repeatedly:
+def reverse(sec):
+   gpio.output(17, False)
+   gpio.output(22, True)
+   gpio.output(23, False) 
+   gpio.output(24, True)
+   time.sleep(sec)
 
-}
+def rightturn(sec):
+      gpio.output(17, False)
+      gpio.output(22, True)
+      gpio.output(23, True)
+      gpio.output(24, False)
+      time.sleep(sec)
+     
+def leftturn(sec):
+      gpio.output(17, True)
+      gpio.output(22, False)
+      gpio.output(23, False)
+      gpio.output(24, True)
+      time.sleep(sec)
+
+def stop(sec):
+   gpio.output(17, False)
+   gpio.output(22, False)
+   gpio.output(23, False) 
+   gpio.output(24, False)
+   time.sleep(sec)
+def distanceSensor(): #Ultrasonic 1,2,3 Detection
+    
+    #ultrasonic3 = DistanceSensor(echo=19, trigger=13, threshold_distance=0.5)
+    return ultrasonic1.distance*100,ultrasonic2.distance*100 
+def segment_colour(frame):   
+    hsv_roi =  cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
+    
+    mask_1 = cv2.inRange(hsv_roi, np.array([0,100,20]), np.array([50,255,255])) 
+
+    mask = mask_1 
+    kern_dilate = np.ones((96,96),np.uint8)
+    kern_erode  = np.ones((48,48),np.uint8)
+    mask=     cv2.erode(mask,kern_erode)
+    mask=     cv2.dilate(mask,kern_dilate)
+    (h,w) = mask.shape
+    cv2.imshow("mask",mask)
+    cv2.waitKey(1)
+    return mask
+def find_blob(blob):  
+    largest_contour=0
+    cont_index=0
+    contours, hierarchy = cv2.findContours(blob, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+    for idx, contour in enumerate(contours):
+        area=cv2.contourArea(contour)
+        if (area >largest_contour):
+            largest_contour=area
+            cont_index=idx
+                    
+    r=(0,0,2,2)
+    if len(contours) > 0:
+        r = cv2.boundingRect(contours[cont_index])
+     
+    return r,largest_contour
+picam2 = Picamera2()
+camera_config = picam2.create_still_configuration(main={"size": (640, 480)},
+lores={"size": (640, 480)}, display="lores")
+picam2.configure(camera_config)
+#picam2.start_preview(Preview.QTGL) #Comment this out if not using desktop interface
+picam2.start()
+time.sleep(2)
+
+while(True):
+    dis1,dis2 = distanceSensor()
+    print (dis1,dis2)
+    im = picam2.capture_array()
+    cv2.imshow("image",im[::-1])
+    cv2.waitKey(1)
+    height = im.shape[0]
+    width = im.shape[1]
+
+#fucntion 1
+    mask_red=segment_colour(im)
+#fucntion 2
+
+    loct,area=find_blob(mask_red)
+    x,y,w,h=loct
+    centerY = y + (h/2)
+    centerX = x + (w/2)
+    print (centerX,centerY)
+    print (area)
+    if (area > 200000 or dis1 < 10 or dis2 < 10):
+        stop(0.01)
+ 
+    elif centerX < 150:  #If the ball is on left side of camera, it will turn left
+        leftturn(0.01)
+        print("left")
+        ball = 1
+    elif centerX > 490:  #If the ball is on right side of camera, it will turn right
+        rightturn(0.01)
+        #stop(0.01)
+        print("right")
+        ball = 2
+    else:
+        forward(0.01)  #The robot keeps moving towards the ball at a distance
+        #stop(0.05)
+        print("forward")
 ```
 
 # Bill of Materials
