@@ -5,6 +5,7 @@ Have you ever wondered about how Tesla vehicles are able to track every single o
 |:--:|:--:|:--:|:--:|
 | Vaibhav S | Ponderosa High School | Electrical Engineering | Incoming Junior |
 
+
 ![Ball Tracking Robot & Vaibhav](IMG_2186.png)
   
 # Final Milestone
