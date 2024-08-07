@@ -150,6 +150,7 @@ while(True):
         forward(0.01)  #The robot keeps moving towards the ball at a distance
         #stop(0.05)
         print("forward")
+# Credit for code goes to Justin Miner and Effie Blustone
 ```
 
 # Bill of Materials
