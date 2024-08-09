@@ -1,5 +1,5 @@
 # Ball-Tracking Robot
-Have you ever wondered about how Tesla vehicles are able to track every single object they encounter? The ball-tracking robot can also carry out the same function with a smaller size.
+Have you ever wondered about how Tesla vehicles are able to track every single object they encounter? The project I chose is the ball-tracking robot. The ball-tracking robot can also carry out the same function with a smaller size.
 
 | **Engineer** | **School** | **Area of Interest** | **Grade** |
 |:--:|:--:|:--:|:--:|
